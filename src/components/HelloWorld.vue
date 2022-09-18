@@ -2,7 +2,12 @@
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <button type="button" @click="SelectFolder">Select Foleder</button>
+    <button
+      type="button"
+      @click="SelectFolder"
+    >
+      Select Foleder
+    </button>
   </div>
 </template>
 
@@ -10,8 +15,9 @@
 defineProps<{ msg: string }>();
 
 const SelectFolder = async (): Promise<void> => {
-  const path = "C:\\Users\\daigu\\Downloads\\vitejs-vite-jjtwbr";
-  const dir: { path: string, files: string[] } = await window.webAPI.selectFolder(path);
+  const path = 'C:\\Users\\daigu\\Downloads\\vitejs-vite-jjtwbr';
+  const dir: { path: string; files: string[] } =
+    await window.webAPI.selectFolder(path);
   console.log(dir);
 };
 </script>
