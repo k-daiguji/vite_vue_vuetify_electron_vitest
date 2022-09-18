@@ -1,14 +1,23 @@
 {
   "name": "vite_vue",
   "version": "0.0.0",
+  "main": "dist/background.ts",
+  "type": "module",
   "private": true,
   "scripts": {
+    "start": "npm-run-all makedir:dist filecopy:* background:build --parallel vite:dev --race electron:start",
+    "background:build": "rollup --config rollup.config.js",
+    "vite:dev": "vite",
+    "electron:start": "set NODE_ENV=development && electron .",
+    "makedir:dist": "node -e \"require('fs').mkdirSync('./dist', { recursive: true })\"",
+    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.js', './dist/preload.js')\"",
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "electron:serve": "vite electron:serve"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
@@ -22,11 +31,14 @@
     "@vitejs/plugin-vue": "^3.1.0",
     "@vitest/coverage-c8": "^0.23.2",
     "@vue/test-utils": "^2.0.2",
+    "electron": "^20.1.4",
+    "electron-builder": "^23.3.3",
+    "electron-devtools-installer": "^3.2.0",
     "jsdom": "^20.0.0",
+    "npm-run-all": "^4.1.5",
     "vite": "^3.1.0",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vitest": "^0.23.2",
     "vue-cli-plugin-vuetify": "~2.5.8"
-  },
-  "type": "module"
+  }
 }

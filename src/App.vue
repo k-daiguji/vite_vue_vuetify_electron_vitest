@@ -1,23 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld/>
+      <HelloWorld msg="Vite + Vue" />
     </v-main>
   </v-app>
 </template>
 
-<script>
+<script setup lang="ts">
 import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
-}
 </script>
