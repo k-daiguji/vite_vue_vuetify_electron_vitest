@@ -1,8 +1,8 @@
 interface Window {
-    webAPI: {
-        setTitle(title: string): Promise<void>
-        selectFolder(path: string): Promise<{ path: string, files: string[] }>
-    }
+  webAPI: {
+    setTitle(title: string): Promise<void>;
+    selectFolder(path: string): Promise<{ path: string; files: string[] }>;
+  };
 }
 
-declare var window: Window & typeof globalThis
+declare let window: Window & typeof globalThis;
