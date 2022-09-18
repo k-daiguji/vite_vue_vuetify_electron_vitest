@@ -5,12 +5,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "npm-run-all makedir:dist filecopy:* background:build --parallel vite:dev --race electron:start",
+    "start": "npm-run-all makedir:dist filecopy:* background:build --parallel dev --race electron:start",
     "background:build": "rollup --config rollup.config.js",
-    "vite:dev": "vite",
     "electron:start": "set NODE_ENV=development && electron .",
     "makedir:dist": "node -e \"require('fs').mkdirSync('./dist', { recursive: true })\"",
-    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.js', './dist/preload.js')\"",
+    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.ts', './dist/preload.ts')\"",
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
@@ -19,7 +18,7 @@
     "coverage": "vitest run --coverage",
     "electron:serve": "vite electron:serve",
     "lint": "eslint --fix src/*.{js,ts,vue} && eslint --fix src/**/*.{js,ts,vue}",
-    "format": "prettier -w src/*.{ts,vue} && prettier -w src/**/*.{ts,vue}",
+    "format": "prettier -w src/*.{js,ts,vue} && prettier -w src/**/*.{js,ts,vue}",
     "fix": "npm run format && npm run lint"
   },
   "dependencies": {
@@ -30,6 +29,7 @@
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.5.0",
     "@testing-library/vue": "^6.6.1",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
