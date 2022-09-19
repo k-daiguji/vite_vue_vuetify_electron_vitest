@@ -5,6 +5,9 @@ import * as path from "path";
 export default defineConfig({
   plugins: [vue()],
   test: {
+    deps: {
+      inline: ["vuetify"],
+    },
     globals: true,
     environment: "jsdom",
     coverage: {
