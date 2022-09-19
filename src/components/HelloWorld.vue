@@ -1,3 +1,14 @@
+<script setup lang="ts">
+defineProps<{ msg: string }>();
+
+const SelectFolder = async (): Promise<void> => {
+  const path = "C:\\Users\\daigu\\Downloads\\vitejs-vite-jjtwbr";
+  const dir: { path: string; files: string[] } =
+    await window.webAPI.selectFolder(path);
+  console.log(dir);
+};
+</script>
+
 <template>
   <h1>{{ msg }}</h1>
 
@@ -10,17 +21,6 @@
     </button>
   </div>
 </template>
-
-<script setup lang="ts">
-defineProps<{ msg: string }>();
-
-const SelectFolder = async (): Promise<void> => {
-  const path = 'C:\\Users\\daigu\\Downloads\\vitejs-vite-jjtwbr';
-  const dir: { path: string; files: string[] } =
-    await window.webAPI.selectFolder(path);
-  console.log(dir);
-};
-</script>
 
 <style scoped>
 .read-the-docs {

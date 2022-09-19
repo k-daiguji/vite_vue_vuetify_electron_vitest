@@ -1,24 +1,25 @@
 import { app, BrowserWindow, ipcMain, dialog } from "electron";
-import path from "path";
+import * as path from "path";
+import * as fs from "fs";
 
 async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, "preload.ts"),
     },
   });
 
   ipcMain.handle("select-folder", (_, path) => {
-    let directory = { path: "", files: [] };
+    const directory = { path: "", files: [""] };
     const directories = dialog.showOpenDialogSync({
       properties: ["openDirectory"],
       title: "フォルダ(単独選択)",
       defaultPath: path,
     }) ?? [];
     directory.path = directories[0];
-    directory.files = require('fs').readdirSync(directory.path)
+    directory.files = fs.readdirSync(directory.path)
     return directory;
   });
 
