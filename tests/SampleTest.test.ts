@@ -1,14 +1,8 @@
 import { shallowMount } from "@vue/test-utils"
 import { describe, expect, it, vi } from 'vitest'
-import { createVuetify } from "vuetify"
-import * as components from "vuetify/components"
 import App from "@/App.vue"
 
-const vuetify = createVuetify({ components })
 const wrapper = shallowMount(App, {
-  global: {
-    plugins: [vuetify]
-  },
   props: {}
 });
 
