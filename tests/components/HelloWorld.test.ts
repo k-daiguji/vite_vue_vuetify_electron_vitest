@@ -12,7 +12,7 @@ describe("初期表示確認", () => {
   it("初期表示確認", () => {
     expect(wrapper).toBeDefined();
     expect(wrapper.text()).toContain("test Hello");
-    expect(wrapper.text()).toContain("Select Foleder");
+    expect(wrapper.text()).toContain("Create Foleder");
     expect(wrapper.text()).toContain("1min Timer");
   });
 });
