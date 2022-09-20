@@ -1,7 +1,8 @@
 interface Window {
   webAPI: {
     setTitle(title: string): Promise<void>;
-    selectFolder(path: string): Promise<{ path: string; files: string[] }>;
+    selectFolder(path: string): Promise<string>;
+    createFolder(path: string): Promise<string>;
   };
 }
 

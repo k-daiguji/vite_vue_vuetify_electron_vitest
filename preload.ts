@@ -2,6 +2,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("webAPI", {
   selectFolder: async (path) => await ipcRenderer.invoke("select-folder", path),
+  createFolder: async (path) => await ipcRenderer.invoke("create-folder", path),
 });
 
 window.addEventListener("DOMContentLoaded", () => {

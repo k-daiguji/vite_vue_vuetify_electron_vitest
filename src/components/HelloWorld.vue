@@ -1,11 +1,26 @@
 <script setup lang="ts">
 defineProps<{ msg: string }>();
 
-const SelectFolder = async (): Promise<void> => {
+const CreateFolder = async (): Promise<void> => {
   const path = "C:\\Users\\daigu\\Downloads\\vitejs-vite-jjtwbr";
-  const dir: { path: string; files: string[] } =
-    await window.webAPI.selectFolder(path);
-  console.log(dir);
+  const selectFolder: string = await window.webAPI.selectFolder(path);
+  if (!selectFolder) return;
+  const date: Date = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+  const folderName = date
+    .toLocaleString(undefined, options)
+    .replace(/[^0-9]/g, "");
+  const exportPath: string = await window.webAPI.createFolder(
+    `${selectFolder}\\${folderName}`
+  );
+  console.log(exportPath);
 };
 
 /**
@@ -24,9 +39,9 @@ const TimerAlarm = (time: number): void => {
   <div class="card">
     <button
       type="button"
-      @click="SelectFolder"
+      @click="CreateFolder"
     >
-      Select Foleder
+      Create Foleder
     </button>
   </div>
   <div>

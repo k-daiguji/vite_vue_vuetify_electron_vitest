@@ -12,15 +12,23 @@ async function createWindow() {
   });
 
   ipcMain.handle("select-folder", (_, path) => {
-    const directory = { path: "", files: [""] };
     const directories = dialog.showOpenDialogSync({
       properties: ["openDirectory"],
       title: "フォルダ(単独選択)",
       defaultPath: path,
     }) ?? [];
-    directory.path = directories[0];
-    directory.files = fs.readdirSync(directory.path)
-    return directory;
+    return directories[0];
+  });
+
+  ipcMain.handle("create-folder", (_, path) => {
+    let newPath = path;
+    let i = 1;
+    while (fs.existsSync(newPath)) {
+      newPath = path + ` (${i})`
+      i++;
+    }
+    fs.mkdirSync(newPath);
+    return newPath;
   });
 
   await win.loadURL("http://localhost:5173/");
