@@ -36,6 +36,8 @@ const zoom = (e: WheelEvent) => {
   const img: HTMLImageElement = document.getElementById("my_canvas") as HTMLImageElement;
   const prevPaddingLeft = Number(img.style.paddingLeft.replace('px', ''));
   const prevPaddingTop = Number(img.style.paddingTop.replace('px', ''));
+  const prevPaddingRight = Number(img.style.paddingRight.replace('px', ''));
+  const prevPaddingBottom = Number(img.style.paddingBottom.replace('px', ''));
   const prevScrollLeft = canvasArea.scrollLeft;
   const prevScrollTop = canvasArea.scrollTop;
 
@@ -56,8 +58,8 @@ const zoom = (e: WheelEvent) => {
   if (e.deltaY < 0) {
     const paddingLeft: number = prevPaddingLeft - mousePointerX;
     const paddingTop: number = prevPaddingTop - mousePointerY;
-    const scrollLeft: number = paddingLeft < 0 ? -paddingLeft + prevScrollLeft : 0;
-    const scrollTop: number = paddingTop < 0 ? -paddingTop + prevScrollTop : 0;
+    const scrollLeft: number = paddingLeft < 0 ? prevScrollLeft - paddingLeft : 0;
+    const scrollTop: number = paddingTop < 0 ? prevScrollTop - paddingTop : 0;
 
     img.style.paddingLeft = paddingLeft < 0 ? "0px" : `${paddingLeft}px`;
     img.style.paddingRight = `${canvasArea.clientWidth - (img.clientWidth - scrollLeft)}px`;
@@ -67,19 +69,18 @@ const zoom = (e: WheelEvent) => {
     canvasArea.scrollTop = scrollTop;
   }
   else {
-    const width: number = (canvasArea.clientWidth - img.clientWidth) / 2;
     const paddingLeft: number = prevPaddingLeft + (mousePointerX - prevScrollLeft) / 2;
-    const scrollLeft: number = paddingLeft < 0 ? width - paddingLeft + prevScrollLeft : 0;
+    const scrollLeft: number = paddingLeft < 0 ? paddingLeft + prevScrollLeft : 0;
     const paddingTop: number = prevPaddingTop + (mousePointerY - prevScrollTop) / 2;
-    const scrollTop: number = paddingTop < 0 ? width - paddingTop + prevScrollTop : 0;
+    const scrollTop: number = paddingTop < 0 ? paddingTop + prevScrollTop : 2;
 
     img.style.paddingLeft = paddingLeft < 0 ? "0px" : `${paddingLeft}px`;
-    console.log(`canvasArea.clientWidth - (img.clientWidth - scrollLeft)px`, canvasArea.clientWidth, img.clientWidth, scrollLeft)
-    console.log(`${canvasArea.clientWidth - (img.clientWidth - scrollLeft)}px`)
-    img.style.paddingRight = `${canvasArea.clientWidth - (img.clientWidth - scrollLeft)}px`;
+    const paddingRight = img.clientWidth - scrollLeft > 0 ? img.clientWidth - scrollLeft : canvasArea.clientWidth - prevPaddingRight;
+    img.style.paddingRight = `${canvasArea.clientWidth - paddingRight}px`;
     canvasArea.scrollLeft = scrollLeft;
     img.style.paddingTop = paddingTop < 0 ? "0px" : `${paddingTop}px`;
-    img.style.paddingBottom = `${canvasArea.clientWidth - (img.clientWidth - scrollTop)}px`;
+    const paddingBottm = img.clientHeight - scrollTop > 0 ? img.clientHeight - scrollTop : canvasArea.clientHeight - prevPaddingBottom;
+    img.style.paddingBottom = `${canvasArea.clientHeight - paddingBottm}px`;
     canvasArea.scrollTop = scrollTop;
   }
 }
