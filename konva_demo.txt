@@ -1,0 +1,77 @@
+//Demo
+var stage = new Konva.Stage({
+  container: 'container',
+  width: window.innerWidth,
+  height: Math.max(window.innerHeight,800)
+});
+var src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/P._Legendre_%281.5_Mo%29%2A.png/800px-P._Legendre_%281.5_Mo%29%2A.png';
+var layer = new Konva.Layer();
+stage.add(layer);
+var clop = new Konva.Shape()
+
+Konva.Image.fromURL(src, function(konvaImage) {
+  console.log("b")
+  konvaImage.setAttrs({
+    _cropElement: Konva.Shape,
+    stroke: 'black',
+    strokeWidth: 1,
+    y: 100,
+    x: 118,
+    width: 300,
+    height: 125,
+    draggable: true,
+    sceneFunc: function (context) {
+  let width = this.width(),
+    height = this.height(),
+    image = this.image(),
+    cropWidth,
+    cropHeight,
+    params;
+
+  context.save();
+  context.beginPath();
+  console.log("bbbb", width, height)
+  context.rect(0, 0, width, height);
+  context.closePath();
+  context.clip();
+  if (this.hasFill() || this.hasStroke()) {
+    context.fillStrokeShape(this);
+  }
+  if (image) {
+    this._cropElement =new Konva.Shape();
+    this._cropElement.setAttrs({
+      height: 175,
+      rotation: 10,
+      scaleX: 1.256718546954032,
+      scaleY: 1.6075454233616444,
+      width: 250,
+      x: -23.179330196090106,
+      y: -100.75893930126733
+    });
+    if (this._cropElement) {
+      context.save();
+      width = this._cropElement.width();
+      height = this._cropElement.height();
+      let transform = this._cropElement.getAbsoluteTransform();
+      let m = transform.getMatrix();
+      context.transform(m[0], m[1], m[2], m[3], m[4], m[5]);
+    }
+    params = [image, 0, 0, width, height];
+    
+    context.drawImage.apply(context, params);
+    if (this._cropElement) {
+      context.restore(); 
+    }
+  }
+  context.restore();
+}
+  });
+  console.log("c")
+  layer.add(konvaImage);
+  console.log("d")
+  layer.draw();
+  console.log("e")
+});
+
+stage.scaleX(2);
+stage.scaleY(2);
